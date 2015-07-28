@@ -1,0 +1,147 @@
+.title {
+    font-family: inherit;
+    font-size: larger;
+}
+
+.description {
+	text-align: left;
+	margin: 0px 0px 0px 1.5em;
+	padding: 0.2em;
+}
+
+.centered {
+	text-align: center;
+}
+
+.padded {
+	padding: 0.1em;
+}
+
+.input {
+	width: 100%;
+	max-height: 80%;
+	/*background-color: yellow;*/
+	#align-items: baseline;
+	padding: 5px;
+}
+
+.textarea {
+	#align-self: inherit;
+	#align-content: inherit;
+	/*background-color: red;*/
+	text-align: center;
+	height: 500px;
+}
+
+textarea {
+/*	width: 80%;
+	height: 90%;*/
+/*	#align-self: center;
+	#resize: both;*/
+	display: inline-block;
+    margin: 0px 20px 0px 20px;
+    box-sizing: border-box;
+	min-height: 200px;
+	max-height: 90%;
+	max-width:90%;
+}
+
+.mainMenu {
+	margin: 0.6em;
+	width: 55%;
+}
+
+.menuItem{
+	margin-top: 0.2em;
+	background: rgb(250, 242, 229);
+	height: 1.5em;
+}
+
+.menuItemOver {
+	background: rgb(246, 205, 173); 
+}
+
+.itemMenuIcon {
+	float: left;
+	margin-right: 10px;
+}
+
+#resizable { 
+	/*padding: 1.0em; */
+	min-height: 500px;
+	max-height: 100%;
+}
+
+#resizable h3 {
+	text-align: center; 
+ 	margin: 0; 
+}
+
+.divleft
+{
+position: relative;
+float: left;
+width: 50%;
+height: 100%;
+margin: 1;
+}
+
+.divright
+{
+position: relative;
+float: right;
+width: 50%;
+height: 100%;
+margin: 0;
+}
+
+#primary {
+	width: 900px;
+	height: 400px;
+}
+
+#secondary {
+	width: 900px;
+	height: 400px;
+}
+
+#result ul {
+	padding-left: 15px;
+	margin-left: 15px;
+	padding-top: 0px;
+	margin-top: 0px;
+	background: url(open.png) no-repeat 2px 5px;
+	list-style-type: none;
+}
+
+.jsondiffobject {
+    
+}
+
+.jsonobjname {
+	font-style: bold;
+}
+
+.jsondiffarray {
+}
+
+.jsondiffadded {
+    background-color: #75ED69;
+}
+
+.jsondiffremoved {
+	background-color: #E78787;
+}
+
+.jsondiffuntouched {
+    background-color: #DEDEDE;
+}
+
+.jsondiffchanged {
+	background-color: #F5F78A;
+}
+
+.jsontype {
+	font-style: italic;
+	color: grey;
+}

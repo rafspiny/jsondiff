@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>panel</title>
+		<meta name="author" content="Raffaele" />
+		<meta charset="utf-8">
+		<script src="../js/jsondiff.js"></script>
+		<script src="../lib/jquery-1.11.3.min.js"></script>
+		<script src="../lib/jquery-ui.min.js"></script>
+		<link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
+		<link rel="stylesheet" href="../lib/jquery-ui.min.css">
+		<script>
+		    function runEffect() {
+				var selectedEffect = 'puff';
+
+				// run the effect
+				$( "#result" ).show( selectedEffect, {}, 500 ); // callback not needed
+			};
+			function fillDiv(diff) {
+				// TODO check if it is an object or not.
+				// If not thron an exception
+				div = $("#diff").get(0);
+				// Traverse the diff object
+				printSingleDiff(diff, div);
+			};
+
+			function printSingleDiff(diff, div) {
+				var ul = document.createElement("ul");
+
+				var singleLine = document.createElement("span");
+				singleLine.setAttribute('class', 'jsonline jsondiff'+diff.status);
+
+				var value = document.createElement("span");
+				value.appendChild(document.createTextNode(diff.id));
+	            value.setAttribute("class", "jsonobjname");
+
+				var typeSpanA = document.createElement("span");
+	            typeSpanA.appendChild(document.createTextNode(' ('+diff.type+') '))
+	            typeSpanA.setAttribute("class", "jsontype jsondiff"+diff.type);
+
+	            singleLine.appendChild(value);
+	            singleLine.appendChild(typeSpanA);
+	            ul.appendChild(singleLine);
+
+	            if (diff.type === 'object' || diff.type ==='array') {
+		            for (var child in diff.values) {
+		            	var li = document.createElement("li");
+		            	printSingleDiff(diff.values[child], li);
+		            	ul.appendChild(li);
+	            	}
+	            }
+
+            	div.appendChild(ul);
+			};
+			$(function() {
+				$( "#resizable" ).resizable();
+			});
+			$(function() {
+			    $( "#checkdiff" ).click(function( event ) {
+			        event.preventDefault();
+			        var text1 = $('textarea#primary').val();
+			        var text2 = $('textarea#secondary').val();
+			        var result = checkDiff(text1, text2);
+			        if (result == false) {
+			        	alert("Input not valid");
+			        } else {
+			        	alert("Input valid, proceeding...");
+			        	fillDiv(result);
+			        	runEffect();
+			        }
+			    });
+			});
+		</script>
+
+		<!-- Date: 2014-09-10 -->
+	</head>
+	<body>
+		<div class='title centered'>
+			<h1>JSON Diff wiever</h1>
+		</div>
+		<div class='description'>
+			<span>
+				This add-on allows you to easily copare two JSON object. </BR>
+				It will highlight the differences.
+			</span>
+		</div>
+		<div class='input'>
+			<div class='description'></div>
+			<div class='textarea' id="resizable" class="ui-widget-content textarea">
+				<div class="divleft">
+				  	<h3>First version</h3>
+				  	<textarea class="resizeable" id="primary">
+				  	<!--	{"a":3} -->
+				  	</textarea>
+				</div>
+				<div class="divright">
+				  	<h3>Second version</h3>
+				  	<textarea class="resizeable" id="secondary">
+				  		<!--     {"a":6, "b":6} -->
+				  	</textarea>
+				</div>
+			</div>
+			<div class="centered padded">
+				<a href="#" class="ui-state-default ui-corner-all" id="checkdiff">Check diff</a>
+			</div>
+		</div>
+		<div id='result'>
+			<div class='description'></div>
+			<div id='diff'></div>
+		</div>
+	</body>
+</html>	

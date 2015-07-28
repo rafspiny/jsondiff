@@ -1,0 +1,12 @@
+{
+  "title": "JSON Diff View",
+  "name": "jsondiff",
+  "version": "0.0.1",
+  "description": "Easily view JSON object diffs",
+  "main": "index.js",
+  "author": "Raffaele Spinelli",
+  "engines": {
+    "firefox": ">=38.0a1"
+  },
+  "license": "MPL-2.0"
+}
