@@ -38,9 +38,30 @@
 	            name.setAttribute("class", "jsonobjname");
 
 	            var value = document.createElement("span");
-	            var textValue = defined(diff.representation.origin)?diff.representation.origin:diff.representation.copy;
+	            var textValue = (undefined !== diff.representation.original)?diff.representation.original:diff.representation.copy;
 				value.appendChild(document.createTextNode(': '+textValue));
 	            value.setAttribute("class", "jsonobjvalue");
+
+				var changed = document.createElement("span");
+            	changed.setAttribute("class", "jsonobjchanged");
+
+	            if ("changed" === diff.status) {
+	            	var arrow = document.createElement("span");
+					arrow.appendChild(document.createTextNode(' => '));
+		            arrow.setAttribute("class", "jsonobjvalue");
+
+	            	var newValue = document.createElement("span");
+					newValue.appendChild(document.createTextNode(diff.representation.copy));
+		            newValue.setAttribute("class", "jsonobjvalue");
+
+		            var typeSpanB = document.createElement("span");
+		            typeSpanB.appendChild(document.createTextNode(' ('+diff.type+') '))
+		            typeSpanB.setAttribute("class", "jsontype jsondiff"+diff.type);
+
+	            	changed.appendChild(arrow);
+	            	changed.appendChild(newValue);
+	            	changed.appendChild(typeSpanB);
+	            }
 
 				var typeSpanA = document.createElement("span");
 	            typeSpanA.appendChild(document.createTextNode(' ('+diff.type+') '))
@@ -49,6 +70,7 @@
 	            singleLine.appendChild(name);
 	            singleLine.appendChild(value);
 	            singleLine.appendChild(typeSpanA);
+	            singleLine.appendChild(changed);
 	            ul.appendChild(singleLine);
 
 	            if (diff.type === 'object' || diff.type ==='array') {

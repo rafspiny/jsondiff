@@ -57,7 +57,9 @@ function populateDiff(origin, copy, diff) {
 				"type": typeOf(origin[key]),
 				"status":"untouched", 
 				"values":{},
-				"representation": {}
+				"representation": {
+					"original": stringify(origin[key])
+				}
 			};
 			if (!copy.hasOwnProperty(key)) {
 				// The key has been removed
@@ -73,7 +75,9 @@ function populateDiff(origin, copy, diff) {
 			 	"type": typeOf(copy[key]), 
 			 	"status":"untouched", 
 			 	"values":{},
-				"representation": {}
+				"representation": {
+					"copy": stringify(copy[key])
+				}
 			};
 			if (!origin.hasOwnProperty(key)) {
 				// The key has been removed
