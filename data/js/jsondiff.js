@@ -54,7 +54,7 @@ function populateDiff(origin, copy, diff) {
 			}
 		}
 		for (var key in copy) {
-			diff.values[key] = { "id": key, "type": typeOf(origin[key]), "status":"untouched", "values":{}};
+			diff.values[key] = { "id": key, "type": typeOf(copy[key]), "status":"untouched", "values":{}};
 			if (!origin.hasOwnProperty(key)) {
 				// The key has been removed
 				diff.values[key].status = "added";
