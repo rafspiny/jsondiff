@@ -6,6 +6,10 @@ function typeOf(value) {
     return isArray(value) ? "array" : typeof value;
 }
 
+function stringify(value) {
+	return typeOf(value) === "object" || typeOf(value) === "array"?undefined:value.valueOf();
+}
+
 function checkDiff(string1, string2) {
 	origin = null;
 	copy   = null;
@@ -25,7 +29,7 @@ function checkDiff(string1, string2) {
 		return false;
 	}
 
-	diff = { "id": "root", "type": "", "status":"untouched", "values":{}};
+	diff = { "id": "root", "type": "", "status":"untouched", "values":{}, "representation":{}};
 	populateDiff(origin, copy, diff);
 	console.log(diff);
 	return diff;
@@ -41,10 +45,20 @@ function populateDiff(origin, copy, diff) {
     	return;
     } else {
     	diff.type = typeOrigin;
+    	diff.representation = {
+			"original": stringify(origin),
+			"copy": stringify(copy)
+		}
     }
 	if (typeOrigin == 'object') {
 		for (var key in origin) {
-			diff.values[key] = { "id": key, "type": typeOf(origin[key]), "status":"untouched", "values":{}};
+			diff.values[key] = { 
+				"id": key,
+				"type": typeOf(origin[key]),
+				"status":"untouched", 
+				"values":{},
+				"representation": {}
+			};
 			if (!copy.hasOwnProperty(key)) {
 				// The key has been removed
 				diff.values[key].status = "removed";
@@ -54,7 +68,13 @@ function populateDiff(origin, copy, diff) {
 			}
 		}
 		for (var key in copy) {
-			diff.values[key] = { "id": key, "type": typeOf(copy[key]), "status":"untouched", "values":{}};
+			diff.values[key] = {
+			 	"id": key, 
+			 	"type": typeOf(copy[key]), 
+			 	"status":"untouched", 
+			 	"values":{},
+				"representation": {}
+			};
 			if (!origin.hasOwnProperty(key)) {
 				// The key has been removed
 				diff.values[key].status = "added";

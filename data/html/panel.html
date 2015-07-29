@@ -33,14 +33,20 @@
 				var singleLine = document.createElement("span");
 				singleLine.setAttribute('class', 'jsonline jsondiff'+diff.status);
 
-				var value = document.createElement("span");
-				value.appendChild(document.createTextNode(diff.id));
-	            value.setAttribute("class", "jsonobjname");
+				var name = document.createElement("span");
+				name.appendChild(document.createTextNode(diff.id));
+	            name.setAttribute("class", "jsonobjname");
+
+	            var value = document.createElement("span");
+	            var textValue = defined(diff.representation.origin)?diff.representation.origin:diff.representation.copy;
+				value.appendChild(document.createTextNode(': '+textValue));
+	            value.setAttribute("class", "jsonobjvalue");
 
 				var typeSpanA = document.createElement("span");
 	            typeSpanA.appendChild(document.createTextNode(' ('+diff.type+') '))
 	            typeSpanA.setAttribute("class", "jsontype jsondiff"+diff.type);
 
+	            singleLine.appendChild(name);
 	            singleLine.appendChild(value);
 	            singleLine.appendChild(typeSpanA);
 	            ul.appendChild(singleLine);
