@@ -7,7 +7,7 @@ function typeOf(value) {
 }
 
 function stringify(value) {
-	return typeOf(value) === "object" || typeOf(value) === "array"?undefined:value.valueOf();
+	return typeOf(value) === "object" || typeOf(value) === "array" || undefined === value?undefined:value.valueOf();
 }
 
 function checkDiff(string1, string2) {
@@ -52,36 +52,24 @@ function populateDiff(origin, copy, diff) {
     }
 	if (typeOrigin == 'object') {
 		for (var key in origin) {
-			diff.values[key] = { 
-				"id": key,
-				"type": typeOf(origin[key]),
-				"status":"untouched", 
-				"values":{},
-				"representation": {
-					"original": stringify(origin[key])
-				}
-			};
+			diff.values[key] = getFilledTemplateDiffObject({"key":key, "value":origin[key], "status":"untouched"});
+
 			if (!copy.hasOwnProperty(key)) {
 				// The key has been removed
 				diff.values[key].status = "removed";
+				recursivelyFillDiffObj(origin[key], diff.values[key]);
 			} else {
 				// The key is there, let's check if it is changed
 				populateDiff(origin[key], copy[key], diff.values[key]);
 			}
 		}
 		for (var key in copy) {
-			diff.values[key] = {
-			 	"id": key, 
-			 	"type": typeOf(copy[key]), 
-			 	"status":"untouched", 
-			 	"values":{},
-				"representation": {
-					"copy": stringify(copy[key])
-				}
-			};
+			diff.values[key] = getFilledTemplateDiffObject({"key":key, "value":copy[key], "status":"untouched"});
+
 			if (!origin.hasOwnProperty(key)) {
 				// The key has been removed
 				diff.values[key].status = "added";
+				recursivelyFillDiffObj(origin[key], diff.values[key]);
 			} else {
 				// The key is there, let's check if it is changed
 				populateDiff(origin[key], copy[key], diff.values[key]);
@@ -112,4 +100,35 @@ function populateDiff(origin, copy, diff) {
 				diff.status = "changed";
 		}
 	}
+}
+
+function recursivelyFillDiffObj(obj, diff) {
+	var typeObj = typeOf(obj);
+	if (typeObj == 'object') {
+		for (var key in obj) {
+			diff.values[key] = getFilledTemplateDiffObject({"key":key, "value":obj[key], "status":diff.status});
+			recursivelyFillDiffObj(obj[key], diff.values[key]);
+		}
+	} else {
+		if (typeObj == 'array') {
+			for (var i = 0; i < obj.length; i++) {
+				diff.values[i] = { "id": i, "type": typeOf(origin[i]), "status":diff.status, "values":{}};
+				recursivelyFillDiffObj(item2, diff.values[key]);
+			};
+		}
+	}
+}
+
+function getFilledTemplateDiffObject(options) {
+	var template = { 
+		"id": options.key,
+		"type": typeOf(options.value),
+		"status":options.status || "untouched", 
+		"values":{},
+		"representation": {
+			"original": stringify(options.value)
+		}
+	}
+
+	return template;
 }

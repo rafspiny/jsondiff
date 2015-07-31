@@ -38,7 +38,7 @@
 	            name.setAttribute("class", "jsonobjname");
 
 	            var value = document.createElement("span");
-	            var textValue = (undefined !== diff.representation.original)?diff.representation.original:diff.representation.copy;
+	            var textValue = (undefined !== diff.representation.original)?diff.representation.original:(undefined !== diff.representation.copy)?diff.representation.copy:'';
 				value.appendChild(document.createTextNode(': '+textValue));
 	            value.setAttribute("class", "jsonobjvalue");
 
@@ -121,13 +121,13 @@
 				<div class="divleft">
 				  	<h3>First version</h3>
 				  	<textarea class="resizeable" id="primary">
-				  	{"a":3, "c":8}
+				  	{"a":3, "c":8, "obj":{"d":6}, "obj2":{"f":6}}
 				  	</textarea>
 				</div>
 				<div class="divright">
 				  	<h3>Second version</h3>
 				  	<textarea class="resizeable" id="secondary">
-				  		{"a":6, "b":7}
+				  		{"a":6, "b":7, "obj":{"g":5}, "obj3":{"h":3}}
 				  	</textarea>
 				</div>
 			</div>
