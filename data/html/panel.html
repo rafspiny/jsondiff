@@ -23,6 +23,7 @@
 				// TODO check if it is an object or not.
 				// If not thron an exception
 				div = $("#diff").get(0);
+				$("#diff").empty();
 				// Traverse the diff object
 				printSingleDiff(diff, div);
 			};
@@ -91,12 +92,32 @@
 			        event.preventDefault();
 			        var text1 = $('textarea#primary').val();
 			        var text2 = $('textarea#secondary').val();
-			        var result = checkDiff(text1, text2);
-			        if (result == false) {
+
+				    origin = null;
+					copy   = null;
+					try{
+				        origin = JSON.parse(text1);
+				    }catch(e){
+				    	// TODO could remember which one is not a JSON object
+				    	return;
+				    }
+
+				    try{
+				        copy = JSON.parse(text2);
+				    }catch(e){
+				    	// TODO could remember which one is not a JSON object
+				    }
+
+					if (null == origin || null == copy) {
+						return false;
+					}
+					var diff = jsondiff.generateDiff(origin, copy);
+
+			        if (diff == false) {
 			        	alert("Input not valid");
 			        } else {
 			        	alert("Input valid, proceeding...");
-			        	fillDiv(result);
+			        	fillDiv(diff);
 			        	runEffect();
 			        }
 			    });
@@ -116,7 +137,6 @@
 			</span>
 		</div>
 		<div class='input'>
-			<div class='description'></div>
 			<div class='textarea' id="resizable" class="ui-widget-content textarea">
 				<div class="divleft">
 				  	<h3>First version</h3>
@@ -136,7 +156,14 @@
 			</div>
 		</div>
 		<div id='result'>
-			<div class='description'></div>
+			<div class='description'>
+				<span>
+					<p>*	Paste your JSON objects in the text fields. Click "Check diff" to see the diff.</p>
+					<p>*	Changed values are highlited in yellow. New "arrivals" are marked in green, while removed values highlighted in red.</p>
+					<p>*	Paste your JSON objects in the text fields. Click "Check diff" to see the diff.</p>
+					<p>*	If the json string in the texbox is invalid it will be indicated.</p>
+				</span>
+			</div>
 			<div id='diff'></div>
 		</div>
 	</body>
