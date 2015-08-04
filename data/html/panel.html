@@ -16,16 +16,15 @@
 			document.addEventListener("click", clickHandler, false);
 			function clickHandler(e) {
 	            var e = e || window.event;
-	            if (e.target.nodeName.toUpperCase() === "UL") {
-	                if (e.target.getAttribute("closed") === "yes")
-	                    e.target.setAttribute("closed", "no");
+	            if (e.target.nodeName.toLowerCase() === "ul") {
+	                if (e.target.getAttribute("open") === "no")
+	                    e.target.setAttribute("open", "yes");
 	                else
-	                    e.target.setAttribute("closed", "yes");
+	                    e.target.setAttribute("open", "no");
 	            }
 	        };
 		    function runEffect() {
 				var selectedEffect = 'puff';
-
 				// run the effect
 				$( "#result" ).show( selectedEffect, {}, 500 ); // callback not needed
 			};
@@ -40,7 +39,7 @@
 
 			function printSingleDiff(diff, div) {
 				var ul = document.createElement("ul");
-				ul.setAttribute('closed', 'no');
+				ul.setAttribute('open', 'yes');
 
 				var singleLine = document.createElement("span");
 				singleLine.setAttribute('class', 'jsonline jsondiff'+diff.status);
@@ -166,16 +165,15 @@
 				</div>
 			</div>
 			<div class="centered padded">
-				<a href="#" class="ui-state-default ui-corner-all" id="checkdiff">Check diff</a>
+				<a href="#" class="ui-state-default ui-corner-all button" id="checkdiff">Check diff</a>
 			</div>
 		</div>
 		<div id='result'>
 			<div class='description block darkblue'>
 				<span>
 					<p>*	Paste your JSON objects in the text fields. Click "Check diff" to see the diff.</p>
-					<p>*	Changed values are highlited in yellow. New "arrivals" are marked in green, while removed values highlighted in red.</p>
-					<p>*	Paste your JSON objects in the text fields. Click "Check diff" to see the diff.</p>
-					<p>*	If the json string in the texbox is invalid it will be indicated.</p>
+					<p>*	Changed values are highlited in yellow. New "arrivals" are marked in green, while removed values are highlighted in red.</p>
+					<p>*	If the json string in the texbox is not valid it will be indicated.</p>
 				</span>
 			</div>
 			<div id='diff' class='block'></div>

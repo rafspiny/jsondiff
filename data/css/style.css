@@ -32,26 +32,16 @@ body {
 }
 
 .input {
-	/*width: 100%;*/
 	max-height: 80%;
-	/*background-color: yellow;*/
-	#align-items: baseline;
 	padding: 5px;
 }
 
 .textarea {
-	#align-self: inherit;
-	#align-content: inherit;
-	/*background-color: red;*/
 	text-align: center;
 	height: 400px;
 }
 
 textarea {
-/*	width: 80%;
-	height: 90%;*/
-/*	#align-self: center;
-	#resize: both;*/
 	display: inline-block;
     margin: 0px 20px 0px 20px;
     box-sizing: border-box;
@@ -84,7 +74,6 @@ textarea {
 }
 
 #resizable { 
-	/*padding: 1.0em; */
 	min-height: 400px;
 	max-height: 100%;
 }
@@ -125,10 +114,10 @@ margin: 0;
 	background: url(open.png) no-repeat 2px 5px;
 	list-style-type: none;
 }
-#results ul[closed="yes"] > li {
+#results ul[open="no"] > li {
 	background: url(closed.png) no-repeat 2px 5px;
 }
-#diff ul[closed="yes"] li {
+#diff ul[open="no"] li {
 	display: none;
 }
 
@@ -181,4 +170,8 @@ margin: 0;
 
 .invalidJson {
 	background-color: #E78787;
+}
+
+.button {
+	padding: 0.3em;
 }
