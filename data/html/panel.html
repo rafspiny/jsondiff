@@ -13,6 +13,16 @@
 		<link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
 		<link rel="stylesheet" href="../lib/jquery-ui.min.css">
 		<script>
+			document.addEventListener("click", clickHandler, false);
+			function clickHandler(e) {
+	            var e = e || window.event;
+	            if (e.target.nodeName.toUpperCase() === "UL") {
+	                if (e.target.getAttribute("closed") === "yes")
+	                    e.target.setAttribute("closed", "no");
+	                else
+	                    e.target.setAttribute("closed", "yes");
+	            }
+	        };
 		    function runEffect() {
 				var selectedEffect = 'puff';
 
@@ -93,19 +103,23 @@
 			        var text1 = $('textarea#primary').val();
 			        var text2 = $('textarea#secondary').val();
 
+			        $('#primary').removeClass("invalidJson");
+			        $('#secondary').removeClass("invalidJson");
+
 				    origin = null;
 					copy   = null;
 					try{
 				        origin = JSON.parse(text1);
 				    }catch(e){
-				    	// TODO could remember which one is not a JSON object
-				    	return;
+				    	$('#primary').addClass("invalidJson");
+				    	alert('The input is not valid JSON. Please check the checkboes.');
 				    }
 
 				    try{
 				        copy = JSON.parse(text2);
 				    }catch(e){
-				    	// TODO could remember which one is not a JSON object
+				    	$('#secondary').addClass("invalidJson");
+				    	alert('The input is not valid JSON. Please check the checkboes.');
 				    }
 
 					if (null == origin || null == copy) {
@@ -116,7 +130,6 @@
 			        if (diff == false) {
 			        	alert("Input not valid");
 			        } else {
-			        	alert("Input valid, proceeding...");
 			        	fillDiv(diff);
 			        	runEffect();
 			        }
@@ -127,25 +140,25 @@
 		<!-- Date: 2014-09-10 -->
 	</head>
 	<body>
-		<div class='title centered'>
-			<h1>JSON Diff wiever</h1>
+		<div class='title centered darkblue'>
+			<h1>JSON Diff viewver</h1>
 		</div>
-		<div class='description'>
+		<div class='description block darkblue'>
 			<span>
 				This add-on allows you to easily copare two JSON object. </BR>
 				It will highlight the differences.
 			</span>
 		</div>
-		<div class='input'>
+		<div class='input block'>
 			<div class='textarea' id="resizable" class="ui-widget-content textarea">
 				<div class="divleft">
-				  	<h3>First version</h3>
+				  	<h3 class="darkblue">First version</h3>
 				  	<textarea class="resizeable" id="primary">
 				  	{"a":3, "c":8, "obj":{"d":6}, "obj2":{"f":6}}
 				  	</textarea>
 				</div>
 				<div class="divright">
-				  	<h3>Second version</h3>
+				  	<h3 class="darkblue">Second version</h3>
 				  	<textarea class="resizeable" id="secondary">
 				  		{"a":6, "b":7, "obj":{"g":5}, "obj3":{"h":3}}
 				  	</textarea>
@@ -156,7 +169,7 @@
 			</div>
 		</div>
 		<div id='result'>
-			<div class='description'>
+			<div class='description block darkblue'>
 				<span>
 					<p>*	Paste your JSON objects in the text fields. Click "Check diff" to see the diff.</p>
 					<p>*	Changed values are highlited in yellow. New "arrivals" are marked in green, while removed values highlighted in red.</p>
@@ -164,7 +177,7 @@
 					<p>*	If the json string in the texbox is invalid it will be indicated.</p>
 				</span>
 			</div>
-			<div id='diff'></div>
+			<div id='diff' class='block'></div>
 		</div>
 	</body>
 </html>	
