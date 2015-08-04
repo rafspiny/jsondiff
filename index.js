@@ -1,8 +1,8 @@
-var { ToggleButton } = require('sdk/ui/button/toggle');
+var { ActionButton } = require('sdk/ui/button/action');
 var tabs = require("sdk/tabs");
 var self = require("sdk/self");
 
-var button = ToggleButton(
+var button = ActionButton(
         {
                 id : "json-mainButton",
                 id: "mozilla-link",

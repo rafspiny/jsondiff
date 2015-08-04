@@ -1,12 +1,23 @@
+body {
+	font-family: Tahoma, sans-serif;
+}
+
 .title {
     font-family: inherit;
     font-size: larger;
 }
 
+.darkblue {
+	color: darkblue;
+}
+
 .description {
 	text-align: left;
-	margin: 0px 0px 0px 1.5em;
 	padding: 0.2em;
+}
+
+.block {
+	margin: 1em 0px 0px 1.5em;
 	border-style: dashed;
 	border-color: beige;
 	background-color: aliceblue;
@@ -21,32 +32,25 @@
 }
 
 .input {
-	width: 100%;
 	max-height: 80%;
-	/*background-color: yellow;*/
-	#align-items: baseline;
 	padding: 5px;
 }
 
 .textarea {
-	#align-self: inherit;
-	#align-content: inherit;
-	/*background-color: red;*/
 	text-align: center;
-	height: 500px;
+	height: 400px;
 }
 
 textarea {
-/*	width: 80%;
-	height: 90%;*/
-/*	#align-self: center;
-	#resize: both;*/
 	display: inline-block;
     margin: 0px 20px 0px 20px;
     box-sizing: border-box;
 	min-height: 200px;
 	max-height: 90%;
 	max-width:90%;
+	border: 3px solid #cccccc;
+	padding: 5px;
+	font-family: Tahoma,sans-serif;
 }
 
 .mainMenu {
@@ -70,8 +74,7 @@ textarea {
 }
 
 #resizable { 
-	/*padding: 1.0em; */
-	min-height: 500px;
+	min-height: 400px;
 	max-height: 100%;
 }
 
@@ -98,14 +101,9 @@ height: 100%;
 margin: 0;
 }
 
-#primary {
+#primary, #secondary {
 	width: 900px;
-	height: 400px;
-}
-
-#secondary {
-	width: 900px;
-	height: 400px;
+	height: 90%;
 }
 
 #result ul {
@@ -115,6 +113,12 @@ margin: 0;
 	margin-top: 0px;
 	background: url(open.png) no-repeat 2px 5px;
 	list-style-type: none;
+}
+#results ul[open="no"] > li {
+	background: url(closed.png) no-repeat 2px 5px;
+}
+#diff ul[open="no"] li {
+	display: none;
 }
 
 .jsondiffobject {
@@ -157,10 +161,17 @@ margin: 0;
 }
 
 /*Leave space between list item*/
-#diff > ul > li {
+#diff ul li {
 	margin-top: 0.1em;
 }
 
 #diff {
-	margin-top: 0.5em;
+}
+
+.invalidJson {
+	background-color: #E78787;
+}
+
+.button {
+	padding: 0.3em;
 }
