@@ -2,9 +2,10 @@
   "title": "JSON Diff View",
   "name": "jsondiff",
   "version": "0.0.1",
-  "description": "Easily view JSON object diffs",
+  "description": "Easily view JSON object diffs. Source code can be found at https://github.com/rafspiny/jsondiff/",
   "main": "index.js",
   "author": "Raffaele Spinelli",
+  "homepage": "https://github.com/rafspiny/jsondiff/",
   "engines": {
     "firefox": ">=38.0a1"
   },
