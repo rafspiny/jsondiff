@@ -8,6 +8,13 @@
 if (typeof jsondiff == "undefined") {
   var jsondiff = {
     isArray: function(value) {
+    	// console.log("TYPEOF: ");
+	    // console.log(typeof value);
+	    // console.log("CONSTRUCTOR: ");
+	    // console.log(value.constructor);
+	    // console.log(value.constructor === Array);
+    	// console.log("INSIDE: ");
+    	// console.log(value && typeof value === "object" && value.constructor === Array);
     	return value && typeof value === "object" && value.constructor === Array;
     },
     typeOf: function(value) {
@@ -46,7 +53,7 @@ if (typeof jsondiff == "undefined") {
 		return template;
 	},
 	generateDiff: function(originJSON, copyJSON) {
-		if ('object' !== this.typeOf(originJSON) || 'object' !== this.typeOf(copyJSON)) {
+		if (('object' !== this.typeOf(originJSON) && 'array' !== this.typeOf(originJSON)) || ('object' !== this.typeOf(copyJSON) && 'array' !== this.typeOf(copyJSON))) {
 			//throw  new Exception('Invalid data');
 			return false;
 		}
@@ -125,3 +132,7 @@ if (typeof jsondiff == "undefined") {
 	}
   };
 };
+
+
+if (typeof variable !== 'undefined')
+    exports.jsondiff = jsondiff;
