@@ -58,7 +58,7 @@ if (typeof jsondiff == "undefined") {
 			return false;
 		}
 
-		diff = { "id": "root", "type": "", "status":"untouched", "values":{}, "representation":{}};
+		var diff = { "id": "root", "type": "", "status":"untouched", "values":{}, "representation":{}};
 		this.populateDiff(originJSON, copyJSON, diff);
 		return diff;
 	},
@@ -104,17 +104,23 @@ if (typeof jsondiff == "undefined") {
 			}
 		} else {
 			if (typeOrigin == 'array') {
-				for (var i = 0; i < origin.length; i++) {
+				var minLength = Math.min(origin.length, copy.length);
+				for (var i = 0; i < minLength; i++) {
+					var value = origin[i];
+					var valueOfCopy = copy[i];
+					diff.values[i] = { "id": i, "type": this.typeOf(value), "status":"untouched", "values":{}};
+					this.populateDiff(value, valueOfCopy, diff.values[i]);
+				};
+
+				for (var i = minLength; i < origin.length; i++) {
 					var value = origin[i];
 					diff.values[i] = { "id": i, "type": this.typeOf(value), "status":"untouched", "values":{}};
-					this.populateDiff(item, value, diff);
+					this.populateDiff(value, undefined, diff.values[i]);
 				};
-				for (var i = 0; i < copy.length; i++) {
+				for (var i = minLength; i < copy.length; i++) {
 					var value = copy[i];
-					if (!diff.values.hasOwnProperty(i))
-						diff.values[i] = { "id": i, "type": this.typeOf(value), "status":"untouched", "values":{}};
-
-					this.populateDiff(item, value, diff.values[i]);
+					diff.values[i] = { "id": i, "type": this.typeOf(value), "status":"untouched", "values":{}};
+					this.populateDiff(undefined, value, diff.values[i]);
 				};
 			} else {
 				if (origin === undefined)
@@ -133,6 +139,7 @@ if (typeof jsondiff == "undefined") {
   };
 };
 
-
-if (typeof variable !== 'undefined')
+try{
     exports.jsondiff = jsondiff;
+}catch(e){
+}
