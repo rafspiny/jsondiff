@@ -9,13 +9,16 @@ env:
 before_install:
 - sh -e /etc/init.d/xvfb start
 before_script:
-- npm install -g get-firefox
-- git clone --depth=50 --branch=master git://github.com/mozilla/jpm.git $TMP_DIR/jpm
-- cd $TMP_DIR/jpm
-- npm link
+- npm install
+- npm install -g jpm
+- npm install -g mozilla-download
+- pwd
+- cd $TMP_DIR
+- mozilla-download --branch mozilla-central --product firefox
 - cd $TRAVIS_BUILD_DIR
+- export JPM_FIREFOX_BINARY=$TMP_DIR/firefox/firefox
 script:
-- $TMP_DIR/jpm/bin/jpm test -v -b $JPM_FIREFOX_BINARY
+- jpm test -v -b $JPM_FIREFOX_BINARY
 notifications:
   email:
     on_failure: never
