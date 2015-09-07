@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/rafspiny/jsondiff.svg)](https://travis-ci.org/rafspiny/jsondiff)
+
 #JSON Diff View
 Easily view JSON object diffs.
 
