@@ -15,7 +15,7 @@ before_script:
 - npm link
 - cd $TRAVIS_BUILD_DIR
 script:
-- $TMP_DIR/bin/jpm test -v -b $JPM_FIREFOX_BINARY
+- $TMP_DIR/jpm/bin/jpm test -v -b $JPM_FIREFOX_BINARY
 notifications:
   email:
     on_failure: never
