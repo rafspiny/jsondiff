@@ -14,7 +14,7 @@ before_script:
 - npm install -g mozilla-download
 - pwd
 - cd $TMP_DIR
-- mozilla-download --branch mozilla-central --product firefox
+- mozilla-download --branch mozilla-central --product firefox $TMP_DIR
 - cd $TRAVIS_BUILD_DIR
 - export JPM_FIREFOX_BINARY=$TMP_DIR/firefox/firefox
 script:
