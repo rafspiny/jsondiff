@@ -8,6 +8,13 @@
 if (typeof jsondiff == "undefined") {
   var jsondiff = {
     isArray: function(value) {
+    	// console.log("TYPEOF: ");
+	    // console.log(typeof value);
+	    // console.log("CONSTRUCTOR: ");
+	    // console.log(value.constructor);
+	    // console.log(value.constructor === Array);
+    	// console.log("INSIDE: ");
+    	// console.log(value && typeof value === "object" && value.constructor === Array);
     	return value && typeof value === "object" && value.constructor === Array;
     },
     typeOf: function(value) {
@@ -46,12 +53,12 @@ if (typeof jsondiff == "undefined") {
 		return template;
 	},
 	generateDiff: function(originJSON, copyJSON) {
-		if ('object' !== this.typeOf(originJSON) || 'object' !== this.typeOf(copyJSON)) {
+		if (('object' !== this.typeOf(originJSON) && 'array' !== this.typeOf(originJSON)) || ('object' !== this.typeOf(copyJSON) && 'array' !== this.typeOf(copyJSON))) {
 			//throw  new Exception('Invalid data');
 			return false;
 		}
 
-		diff = { "id": "root", "type": "", "status":"untouched", "values":{}, "representation":{}};
+		var diff = { "id": "root", "type": "", "status":"untouched", "values":{}, "representation":{}};
 		this.populateDiff(originJSON, copyJSON, diff);
 		return diff;
 	},
@@ -97,17 +104,23 @@ if (typeof jsondiff == "undefined") {
 			}
 		} else {
 			if (typeOrigin == 'array') {
-				for (var i = 0; i < origin.length; i++) {
+				var minLength = Math.min(origin.length, copy.length);
+				for (var i = 0; i < minLength; i++) {
+					var value = origin[i];
+					var valueOfCopy = copy[i];
+					diff.values[i] = { "id": i, "type": this.typeOf(value), "status":"untouched", "values":{}};
+					this.populateDiff(value, valueOfCopy, diff.values[i]);
+				};
+
+				for (var i = minLength; i < origin.length; i++) {
 					var value = origin[i];
 					diff.values[i] = { "id": i, "type": this.typeOf(value), "status":"untouched", "values":{}};
-					this.populateDiff(item, value, diff);
+					this.populateDiff(value, undefined, diff.values[i]);
 				};
-				for (var i = 0; i < copy.length; i++) {
+				for (var i = minLength; i < copy.length; i++) {
 					var value = copy[i];
-					if (!diff.values.hasOwnProperty(i))
-						diff.values[i] = { "id": i, "type": this.typeOf(value), "status":"untouched", "values":{}};
-
-					this.populateDiff(item, value, diff.values[i]);
+					diff.values[i] = { "id": i, "type": this.typeOf(value), "status":"untouched", "values":{}};
+					this.populateDiff(undefined, value, diff.values[i]);
 				};
 			} else {
 				if (origin === undefined)
@@ -125,3 +138,8 @@ if (typeof jsondiff == "undefined") {
 	}
   };
 };
+
+try{
+    exports.jsondiff = jsondiff;
+}catch(e){
+}
