@@ -96,9 +96,9 @@ if (typeof jsondiff == "undefined") {
 				if (!origin.hasOwnProperty(key)) {
 					// The key has been removed
 					diff.values[key].status = "added";
-					this.recursivelyFillDiffObj(origin[key], diff.values[key]);
+					this.recursivelyFillDiffObj(copy[key], diff.values[key]);
 				} else {
-					// The key is there, let's check if it is changed
+					// The key is there, let's check if it is changed 
 					this.populateDiff(origin[key], copy[key], diff.values[key]);
 				}
 			}

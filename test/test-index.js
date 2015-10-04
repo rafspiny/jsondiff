@@ -12,7 +12,10 @@ exports["test loading module OK"] = function(assert) {
 // };
 
 exports["test isArray FAIL"] = function(assert) {
-  assert.ok(module.jsondiff.isArray(false) == false, "Non array returns false");
+  	assert.equal(
+  		module.jsondiff.isArray(false),
+  		false
+	);
 };
 
 exports["test generateDiff OK1"] = function(assert) {
@@ -74,7 +77,8 @@ exports["test generateDiff OK1"] = function(assert) {
 	            }
 	         },
 	         "representation":{
-
+	         	"original":undefined,
+	   			"copy":undefined
 	         }
 	      },
 	      "obj2":{
@@ -95,7 +99,7 @@ exports["test generateDiff OK1"] = function(assert) {
 	            }
 	         },
 	         "representation":{
-
+	         	"original":undefined,
 	         }
 	      },
 	      "b":{
@@ -114,18 +118,29 @@ exports["test generateDiff OK1"] = function(assert) {
 	         "type":"object",
 	         "status":"added",
 	         "values":{
+	         	"h":{
+			        "id":"h",
+			        "type":"number",
+			        "status":"added",
+			        "values":{
 
+			        },
+			        "representation":{
+			        	"original":3
+			        }
+			      }
 	         },
 	         "representation":{
-
+	         	"original":undefined,
 	         }
 	      }
 	   },
 	   "representation":{
-
+	   		"original":undefined,
+	   		"copy":undefined
 	   }
 	};
-	assert.ok(
+	assert.deepEqual(
     	module.jsondiff.generateDiff(
       		{"a":3, "c":8, "obj":{"d":6}, "obj2":{"f":6}},
       		{"a":6, "b":7, "obj":{"g":5}, "obj3":{"h":3}}
@@ -168,13 +183,175 @@ exports["test generateDiff OK2"] = function(assert) {
 	      }
 	   },
 	   "representation":{
-
+			"original":undefined,
+            "copy":undefined
 	   }
 	};
-	assert.ok(
+	assert.deepEqual(
     	module.jsondiff.generateDiff(
       		[3,5],
       		[4,6]
+    	),
+    	expectedResult
+  );
+};
+
+exports["test generateDiff OK3"] = function(assert) {
+    // assert.pass();
+    var expectedResult = {
+	    "id":"root",
+	    "type":"object",
+	    "status":"untouched",
+	    "values":{
+		   "obj1":{
+		        "id":"obj1",
+		        "type":"object",
+		        "status":"untouched",
+		        "values":{
+				    "obj2":{
+				        "id":"obj2",
+				        "type":"object",
+				        "status":"untouched",
+				        "values":{
+							"obj3":{
+								"id":"obj3",
+								"type":"object",
+								"status":"untouched",
+								"values":{
+									"prop1":{
+										"id":"prop1",
+										"type":"string",
+										"status":"untouched",
+										"values":{
+
+										},
+										"representation":{
+											"original":"value1",
+								            "copy":"value1"
+										}
+									},
+									"prop2":{
+										"id":"prop2",
+										"type":"string",
+										"status":"untouched",
+										"values":{
+
+										},
+										"representation":{
+											"original":"value2",
+								            "copy":"value2"
+										}
+									},
+									"prop3":{
+										"id":"prop3",
+										"type":"string",
+										"status":"untouched",
+										"values":{
+
+										},
+										"representation":{
+											"original":"value3",
+								            "copy":"value3"
+										}
+									},
+									"prop4":{
+										"id":"prop4",
+										"type":"string",
+										"status":"untouched",
+										"values":{
+
+										},
+										"representation":{
+											"original":"value4",
+								            "copy":"value4"
+										}
+									}
+								},
+								"representation":{
+									"original":undefined,
+						            "copy":undefined
+								}
+							},
+							"obj_added":{
+								"id":"obj_added",
+								"type":"object",
+								"status":"added",
+								"values":{
+									"prop1":{
+										"id":"prop1",
+										"type":"string",
+										"status":"added",
+										"values":{
+
+										},
+										"representation":{
+											"original":"value1",
+								            "copy":"value1"
+										}
+									},
+									"prop2":{
+										"id":"prop2",
+										"type":"string",
+										"status":"added",
+										"values":{
+
+										},
+										"representation":{
+											"original":"value2",
+								            "copy":"value2"
+										}
+									},
+									"prop3":{
+										"id":"prop3",
+										"type":"string",
+										"status":"added",
+										"values":{
+
+										},
+										"representation":{
+											"original":"value3",
+								            "copy":"value3"
+										}
+									},
+									"prop4":{
+										"id":"prop4",
+										"type":"string",
+										"status":"added",
+										"values":{
+
+										},
+										"representation":{
+											"original":"value4",
+								            "copy":"value4"
+										}
+									}
+								},
+								"representation":{
+									"original":undefined
+								}
+							}
+				        },
+				        "representation":{
+							"original":undefined,
+				            "copy":undefined
+				        }
+				    }
+		        },
+		        "representation":{
+					"original":undefined,
+		            "copy":undefined
+		        }
+		    }
+	    },
+	    "representation":{
+			"original":undefined,
+            "copy":undefined
+	    }
+	};
+	assert.ok(
+    	module.jsondiff.generateDiff(
+			{"obj1":{"obj2":{"obj3":{"prop1":"value1","prop2":"value2","prop3":"value3","prop4":"value4"}}}},
+			{"obj1":{"obj2":{"obj_added":{"prop1":"value1","prop2":"value2","prop3":"value3","prop4":"value4"},"obj3":{"prop1":"value1","prop2":"value2","prop3":"value3","prop4":"value4"}}}}
     	),
     	expectedResult
   );
