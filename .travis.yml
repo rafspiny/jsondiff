@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - "0.12"
+  - "stable"
 env:
   global:
   - DISPLAY=:99.0
@@ -9,7 +9,6 @@ env:
 before_install:
 - sh -e /etc/init.d/xvfb start
 before_script:
-- npm install
 - npm install -g jpm
 - npm install -g mozilla-download
 - pwd
