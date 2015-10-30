@@ -2,10 +2,14 @@ document.addEventListener("click", clickHandler, false);
 function clickHandler(e) {
     var e = e || window.event;
     if (e.target.nodeName.toLowerCase() === "ul") {
-        if (e.target.getAttribute("open") === "no")
-            e.target.setAttribute("open", "yes");
-        else
-            e.target.setAttribute("open", "no");
+        switch(e.target.getAttribute("open")) {
+            case 'no':
+                e.target.setAttribute("open", "yes");
+                break;
+            case 'yes':
+                e.target.setAttribute("open", "no");
+                break;
+        }
     }
 };
 function runEffect() {
@@ -24,7 +28,6 @@ function fillDiv(diff) {
 
 function printSingleDiff(diff, div) {
 	var ul = document.createElement("ul");
-	ul.setAttribute('open', 'yes');
 
 	var singleLine = document.createElement("span");
 	singleLine.setAttribute('class', 'jsonline jsondiff'+diff.status);
@@ -75,6 +78,7 @@ function printSingleDiff(diff, div) {
         	printSingleDiff(diff.values[child], li);
         	ul.appendChild(li);
     	}
+        ul.setAttribute('open', 'yes');
     }
 
 	div.appendChild(ul);

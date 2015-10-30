@@ -112,15 +112,18 @@ margin: 0;
 	margin-left: 15px;
 	padding-top: 0px;
 	margin-top: 0px;
-	background: url(open.png) no-repeat 2px 5px;
+	/*background: url(open.png) no-repeat 2px 5px;*/
 	list-style-type: none;
 }
-#results ul[open="yes"] > li {
+#result ul[open=yes] {
 	background: url(closed.png) no-repeat 2px 5px;
 }
-#diff ul[open="no"] {
-	background: url(closed.png) no-repeat 2px 5px;
+#result ul[open=no] {
+	background: url(open.png) no-repeat 2px 5px;
 }
+/*#diff ul[open=no] {
+	background: url(closed.png) no-repeat 2px 5px;
+}*/
 #diff ul[open="no"] li {
 	display: none;
 	
