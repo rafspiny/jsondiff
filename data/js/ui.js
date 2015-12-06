@@ -86,6 +86,36 @@ function printSingleDiff(diff, div) {
 $(function() {
 	$( "#resizable" ).resizable();
 });
+function formatJsonInTextArea(node) {
+    var text1 = node.val();
+    // Remove newlines
+    var text1 = text1.replace("\n", "");
+    try{
+        value = JSON.parse(text1);
+        indendent_text = JSON.stringify(value, null, "  ");
+        node.val(indendent_text);
+
+    }catch(e){
+        $('#primary').addClass("invalidJson");
+        alert('The input is not valid JSON. Please check the checkboes.');
+    }
+};
+$(function() {
+    $( "#format1" ).click(function( event ) {
+        event.preventDefault();
+        node = $('textarea#primary');
+        $('#primary').removeClass("invalidJson");
+        formatJsonInTextArea(node);
+    });
+});
+$(function() {
+    $( "#format2" ).click(function( event ) {
+        event.preventDefault();
+        node = $('textarea#secondary');
+        $('#secondary').removeClass("invalidJson");
+        formatJsonInTextArea(node);
+    });
+});
 $(function() {
     $( "#checkdiff" ).click(function( event ) {
         event.preventDefault();

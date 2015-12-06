@@ -183,3 +183,11 @@ margin: 0;
 .button {
 	padding: 0.3em;
 }
+
+.formatsrc {
+	margin-right: 20%
+}
+
+.formatdst {
+	margin-left: 20%
+}
