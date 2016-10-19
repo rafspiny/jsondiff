@@ -94,7 +94,7 @@ if (typeof jsondiff == "undefined") {
 				diff.values[key] = this.getFilledTemplateDiffObject({"key":key, "value":copy[key], "status":"untouched"});
 
 				if (!origin.hasOwnProperty(key)) {
-					// The key has been removed
+					// The key has been added
 					diff.values[key].status = "added";
 					this.recursivelyFillDiffObj(copy[key], diff.values[key]);
 				} else {
@@ -108,19 +108,21 @@ if (typeof jsondiff == "undefined") {
 				for (var i = 0; i < minLength; i++) {
 					var value = origin[i];
 					var valueOfCopy = copy[i];
-					diff.values[i] = { "id": i, "type": this.typeOf(value), "status":"untouched", "values":{}};
+					diff.values[i] = this.getFilledTemplateDiffObject({"key":i, "value":value, "status":"untouched"});
 					this.populateDiff(value, valueOfCopy, diff.values[i]);
 				};
 
 				for (var i = minLength; i < origin.length; i++) {
 					var value = origin[i];
-					diff.values[i] = { "id": i, "type": this.typeOf(value), "status":"untouched", "values":{}};
-					this.populateDiff(value, undefined, diff.values[i]);
+					diff.values[i] = this.getFilledTemplateDiffObject({"key":i, "value":value, "status":"untouched"});
+					diff.values[i].status = "removed";
+					this.recursivelyFillDiffObj(origin[i], diff.values[i]);
 				};
 				for (var i = minLength; i < copy.length; i++) {
 					var value = copy[i];
-					diff.values[i] = { "id": i, "type": this.typeOf(value), "status":"untouched", "values":{}};
-					this.populateDiff(undefined, value, diff.values[i]);
+					diff.values[i] = this.getFilledTemplateDiffObject({"key":i, "value":value, "status":"untouched"});
+					diff.values[i].status = "added";
+					this.recursivelyFillDiffObj(copy[i], diff.values[i]);
 				};
 			} else {
 				if (origin === undefined)
