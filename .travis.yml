@@ -10,6 +10,7 @@ before_install:
 - sh -e /etc/init.d/xvfb start
 before_script:
 - npm install
+- npm install -g mozilla-download
 - pwd
 - cd $TMP_DIR
 - mozilla-download --branch mozilla-central --product firefox $TMP_DIR
