@@ -266,8 +266,7 @@ describe('jsondiff', function() {
 
                                                 },
                                                 "representation":{
-                                                    "original":"value1",
-                                                    "copy":"value1"
+                                                    "original":"value1"
                                                 }
                                             },
                                             "prop2":{
@@ -278,8 +277,7 @@ describe('jsondiff', function() {
 
                                                 },
                                                 "representation":{
-                                                    "original":"value2",
-                                                    "copy":"value2"
+                                                    "original":"value2"
                                                 }
                                             },
                                             "prop3":{
@@ -290,8 +288,7 @@ describe('jsondiff', function() {
 
                                                 },
                                                 "representation":{
-                                                    "original":"value3",
-                                                    "copy":"value3"
+                                                    "original":"value3"
                                                 }
                                             },
                                             "prop4":{
@@ -302,8 +299,7 @@ describe('jsondiff', function() {
 
                                                 },
                                                 "representation":{
-                                                    "original":"value4",
-                                                    "copy":"value4"
+                                                    "original":"value4"
                                                 }
                                             }
                                         },
@@ -333,9 +329,7 @@ describe('jsondiff', function() {
                 {"obj1":{"obj2":{"obj3":{"prop1":"value1","prop2":"value2","prop3":"value3","prop4":"value4"}}}},
     			{"obj1":{"obj2":{"obj_added":{"prop1":"value1","prop2":"value2","prop3":"value3","prop4":"value4"},"obj3":{"prop1":"value1","prop2":"value2","prop3":"value3","prop4":"value4"}}}}
       		);
-      		console.log(expectedResult.values.obj1.values.obj2.values);
-            console.log(comparison.values.obj1.values.obj2.values);
-            expect(comparison.values.obj1.values.obj2.values).to.deep.equal(expectedResult.values.obj1.values.obj2.values);
+            expect(comparison).to.deep.equal(expectedResult);
             done()
         });
     });
