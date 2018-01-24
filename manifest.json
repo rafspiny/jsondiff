@@ -1,0 +1,32 @@
+{
+  "manifest_version": 2,
+  "title": "JSON Diff View",
+  "name": "jsondiff",
+  "version": "0.2.0",
+  "description": "Easily view JSON object diffs. Source code can be found at https://github.com/rafspiny/jsondiff/",
+  "author": "Raffaele Spinelli",
+  "homepage_url": "https://github.com/rafspiny/jsondiff/",
+  "default_title": "JSON Different Viewer",
+
+  "icons": {
+    "16": "data/images/icon-16.png",
+    "32": "data/images/icon-32.png",
+    "64": "data/images/icon-64.png",
+    "128": "data/images/icon-128.png"
+  },
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "permissions": [
+    "tabs"
+  ],
+
+  "browser_action": {
+    "default_icon": {
+      "16": "data/images/icon-16.png",
+      "32": "data/images/icon-32.png",
+      "64": "data/images/icon-64.png",
+      "128": "data/images/icon-128.png"
+    }
+  }
+}
