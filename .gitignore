@@ -1,4 +1,4 @@
 .idea/*
 *.xpi
 web-ext-artifacts/*
-test/*
+node_modules/*
