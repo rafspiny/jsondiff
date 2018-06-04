@@ -16,6 +16,10 @@ before_script:
 - mozilla-download --branch mozilla-central --product firefox $TMP_DIR
 - cd $TRAVIS_BUILD_DIR
 - export JPM_FIREFOX_BINARY=$TMP_DIR/firefox/firefox
+# Download code climate tools
+- curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+- chmod +x ./cc-test-reporter
+- ./cc-test-reporter before-build
 script:
 - npm test
 - sonar-scanner -X
@@ -28,4 +32,5 @@ addons:
     sonarcloud:
         organization: "rafspiny-github" # the key of the org you chose at step #3
 after_script:
-  - codeclimate-test-reporter < lcov.info
+  #- codeclimate-test-reporter < coverage/lcov.info
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
