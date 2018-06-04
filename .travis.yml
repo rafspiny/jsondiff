@@ -18,7 +18,7 @@ before_script:
 - export JPM_FIREFOX_BINARY=$TMP_DIR/firefox/firefox
 script:
 - npm test
-- sonar-scanner
+- sonar-scanner -X
 notifications:
   email:
     on_failure: never
