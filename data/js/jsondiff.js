@@ -25,18 +25,10 @@ if (typeof jsondiff == "undefined") {
 	},
 	recursivelyFillDiffObj: function(obj, diff) {
 		var typeObj = this.typeOf(obj);
-		if (typeObj == 'object') {
+		if (typeObj == 'object' || typeObj == 'array') {
 			for (var key in obj) {
 				diff.values[key] = this.getFilledTemplateDiffObject({"key":key, "value":obj[key], "status":diff.status});
 				this.recursivelyFillDiffObj(obj[key], diff.values[key]);
-			}
-		} else {
-			if (typeObj == 'array') {
-				for (var i = 0; i < obj.length; i++) {
-					var value = obj[i];
-					diff.values[i] = this.getFilledTemplateDiffObject({"key":i, "value":obj[i], "status":diff.status});
-					this.recursivelyFillDiffObj(value, diff.values[i]);
-				}
 			}
 		}
 	},
@@ -139,7 +131,7 @@ if (typeof jsondiff == "undefined") {
 		}
 	}
   };
-};
+}
 
 try{
     exports.jsondiff = jsondiff;
