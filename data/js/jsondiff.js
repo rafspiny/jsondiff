@@ -36,7 +36,7 @@ if (typeof jsondiff == "undefined") {
 					var value = obj[i];
 					diff.values[i] = this.getFilledTemplateDiffObject({"key":i, "value":obj[i], "status":diff.status});
 					this.recursivelyFillDiffObj(value, diff.values[i]);
-				};
+				}
 			}
 		}
 	},
@@ -78,52 +78,52 @@ if (typeof jsondiff == "undefined") {
 			}
 	    }
 		if (typeOrigin == 'object') {
-			for (var key in origin) {
-				diff.values[key] = this.getFilledTemplateDiffObject({"key":key, "value":origin[key], "status":"untouched"});
+			for (var key_origin in origin) {
+				diff.values[key_origin] = this.getFilledTemplateDiffObject({"key":key_origin, "value":origin[key_origin], "status":"untouched"});
 
-				if (!copy.hasOwnProperty(key)) {
+				if (!copy.hasOwnProperty(key_origin)) {
 					// The key has been removed
-					diff.values[key].status = "removed";
-					this.recursivelyFillDiffObj(origin[key], diff.values[key]);
+					diff.values[key_origin].status = "removed";
+					this.recursivelyFillDiffObj(origin[key_origin], diff.values[key_origin]);
 				} else {
 					// The key is there, let's check if it is changed
-					this.populateDiff(origin[key], copy[key], diff.values[key]);
+					this.populateDiff(origin[key_origin], copy[key_origin], diff.values[key_origin]);
 				}
 			}
-			for (var key in copy) {
-				diff.values[key] = this.getFilledTemplateDiffObject({"key":key, "value":copy[key], "status":"untouched"});
+			for (var key_copy in copy) {
+				diff.values[key_copy] = this.getFilledTemplateDiffObject({"key":key_copy, "value":copy[key_copy], "status":"untouched"});
 
-				if (!origin.hasOwnProperty(key)) {
+				if (!origin.hasOwnProperty(key_copy)) {
 					// The key has been added
-					diff.values[key].status = "added";
-					this.recursivelyFillDiffObj(copy[key], diff.values[key]);
+					diff.values[key_copy].status = "added";
+					this.recursivelyFillDiffObj(copy[key_copy], diff.values[key_copy]);
 				} else {
 					// The key is there, let's check if it is changed 
-					this.populateDiff(origin[key], copy[key], diff.values[key]);
+					this.populateDiff(origin[key_copy], copy[key_copy], diff.values[key_copy]);
 				}
 			}
 		} else {
 			if (typeOrigin == 'array') {
 				var minLength = Math.min(origin.length, copy.length);
-				for (var i = 0; i < minLength; i++) {
-					var value = origin[i];
-					var valueOfCopy = copy[i];
-					diff.values[i] = this.getFilledTemplateDiffObject({"key":i, "value":value, "status":"untouched"});
-					this.populateDiff(value, valueOfCopy, diff.values[i]);
-				};
+				for (var common_index = 0; common_index < minLength; common_index++) {
+					var common_object = origin[common_index];
+					var valueOfCopy = copy[common_index];
+					diff.values[common_index] = this.getFilledTemplateDiffObject({"key":common_index, "value":common_object, "status":"untouched"});
+					this.populateDiff(common_object, valueOfCopy, diff.values[common_index]);
+				}
 
-				for (var i = minLength; i < origin.length; i++) {
-					var value = origin[i];
-					diff.values[i] = this.getFilledTemplateDiffObject({"key":i, "value":value, "status":"untouched"});
-					diff.values[i].status = "removed";
-					this.recursivelyFillDiffObj(origin[i], diff.values[i]);
-				};
-				for (var i = minLength; i < copy.length; i++) {
-					var value = copy[i];
-					diff.values[i] = this.getFilledTemplateDiffObject({"key":i, "value":value, "status":"untouched"});
-					diff.values[i].status = "added";
-					this.recursivelyFillDiffObj(copy[i], diff.values[i]);
-				};
+				for (var source_index = minLength; source_index < origin.length; source_index++) {
+					var source_object = origin[source_index];
+					diff.values[source_index] = this.getFilledTemplateDiffObject({"key":source_index, "value":source_object, "status":"untouched"});
+					diff.values[source_index].status = "removed";
+					this.recursivelyFillDiffObj(origin[source_index], diff.values[source_index]);
+				}
+				for (var destination_index = minLength; destination_index < copy.length; destination_index++) {
+					var destination_object = copy[destination_index];
+					diff.values[destination_index] = this.getFilledTemplateDiffObject({"key":destination_index, "value":destination_object, "status":"untouched"});
+					diff.values[destination_index].status = "added";
+					this.recursivelyFillDiffObj(copy[destination_index], diff.values[destination_index]);
+				}
 			} else {
 				if (origin === undefined)
 					diff.status = "added";

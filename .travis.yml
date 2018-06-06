@@ -22,13 +22,11 @@ before_script:
 - ./cc-test-reporter before-build
 script:
 - npm test
-- sonar-scanner -X
+- sonar-scanner
 notifications:
   email:
     on_failure: never
 addons:
-    code_climate:
-        repo_token: 23c49e44a988bc403e15ee4ccf9d2ceaf2fa2ad743a3ce698140d63e42f2b06b
     sonarcloud:
         organization: "rafspiny-github" # the key of the org you chose at step #3
 after_script:
