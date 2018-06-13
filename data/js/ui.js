@@ -1,30 +1,30 @@
 document.addEventListener("click", clickHandler, false);
 function clickHandler(e) {
-    var e = e || window.event;
-    if (e.target.nodeName.toLowerCase() === "ul") {
-        switch(e.target.getAttribute("open")) {
+    var event = e || window.event;
+    if (event.target.nodeName.toLowerCase() === "ul") {
+        switch(event.target.getAttribute("open")) {
             case 'no':
-                e.target.setAttribute("open", "yes");
+                event.target.setAttribute("open", "yes");
                 break;
             case 'yes':
-                e.target.setAttribute("open", "no");
+                event.target.setAttribute("open", "no");
                 break;
         }
     }
-};
+}
 function runEffect() {
 	var selectedEffect = 'puff';
 	// run the effect
 	$( "#result" ).show( selectedEffect, {}, 500 ); // callback not needed
-};
+}
 function fillDiv(diff) {
 	// TODO check if it is an object or not.
 	// If not thron an exception
-	div = $("#diff").get(0);
+	var div = $("#diff").get(0);
 	$("#diff").empty();
 	// Traverse the diff object
 	printSingleDiff(diff, div);
-};
+}
 
 function printSingleDiff(diff, div) {
 	var ul = document.createElement("ul");
@@ -82,40 +82,42 @@ function printSingleDiff(diff, div) {
     }
 
 	div.appendChild(ul);
-};
+}
 $(function() {
 	$( "#resizable" ).resizable();
-});
+})
 function formatJsonInTextArea(node) {
-    var text1 = node.val();
+    var text = node.val();
     // Remove newlines
-    var text1 = text1.replace("\n", "");
+    var text1 = text.replace("\n", "");
     try{
-        value = JSON.parse(text1);
-        indendent_text = JSON.stringify(value, null, "  ");
+        const value = JSON.parse(text1);
+        const indendent_text = JSON.stringify(value, null, "  ");
         node.val(indendent_text);
 
     }catch(e){
-        $('#primary').addClass("invalidJson");
-        alert('The input is not valid JSON. Please check the checkboes.');
+        // computing node id
+        const node_id = node[0].id
+        $('#' + node_id).addClass("invalidJson");
+        alert('The input is not valid JSON. Please check the checkbox.');
     }
-};
+}
 $(function() {
     $( "#format1" ).click(function( event ) {
         event.preventDefault();
-        node = $('textarea#primary');
+        let node = $('textarea#primary');
         $('#primary').removeClass("invalidJson");
         formatJsonInTextArea(node);
     });
-});
+})
 $(function() {
     $( "#format2" ).click(function( event ) {
         event.preventDefault();
-        node = $('textarea#secondary');
+        let node = $('textarea#secondary');
         $('#secondary').removeClass("invalidJson");
         formatJsonInTextArea(node);
     });
-});
+})
 $(function() {
     $( "#checkdiff" ).click(function( event ) {
         event.preventDefault();
@@ -125,8 +127,8 @@ $(function() {
         $('#primary').removeClass("invalidJson");
         $('#secondary').removeClass("invalidJson");
 
-	    origin = null;
-		copy   = null;
+	    let origin = null;
+		let copy   = null;
 		try{
 	        origin = JSON.parse(text1);
 	    }catch(e){
