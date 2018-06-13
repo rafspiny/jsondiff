@@ -89,15 +89,17 @@ $(function() {
 function formatJsonInTextArea(node) {
     var text = node.val();
     // Remove newlines
-    var text1 = text1.replace("\n", "");
+    var text1 = text.replace("\n", "");
     try{
         const value = JSON.parse(text1);
         const indendent_text = JSON.stringify(value, null, "  ");
         node.val(indendent_text);
 
     }catch(e){
-        $('#primary').addClass("invalidJson");
-        alert('The input is not valid JSON. Please check the checkboes.');
+        // computing node id
+        const node_id = node[0].id
+        $('#' + node_id).addClass("invalidJson");
+        alert('The input is not valid JSON. Please check the checkbox.');
     }
 }
 $(function() {
