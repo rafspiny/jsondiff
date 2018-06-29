@@ -5,8 +5,8 @@ describe('jsondiff', function() {
             done();
         });
     });
-    describe('foo', function() {
-        it('test generateDiff OK1', function(done) {
+    describe('generateDiff objects and values', function() {
+        it('different keys and Values', function(done) {
             var expectedResult = {
                "id":"root",
                "type":"object",
@@ -64,8 +64,8 @@ describe('jsondiff', function() {
                         }
                      },
                      "representation":{
-                        "original":undefined,
-                        "copy":undefined
+                        "original":"object",
+                        "copy":"object"
                      }
                   },
                   "obj2":{
@@ -86,7 +86,7 @@ describe('jsondiff', function() {
                         }
                      },
                      "representation":{
-                        "original":undefined,
+                        "original":"object",
                      }
                   },
                   "b":{
@@ -118,13 +118,13 @@ describe('jsondiff', function() {
                           }
                      },
                      "representation":{
-                        "original":undefined,
+                        "original":"object",
                      }
                   }
                },
                "representation":{
-                    "original":undefined,
-                    "copy":undefined
+                    "original":"object",
+                    "copy":"object"
                }
             };
             var comparison = jsondiff.generateDiff(
@@ -134,51 +134,45 @@ describe('jsondiff', function() {
             expect(comparison).to.deep.equal(expectedResult);
             done()
         });
-    });
-    describe('foo', function() {
-        it('test generateDiff OK2', function(done) {
+        it('diferent type of object for the same key', function(done) {
             var expectedResult = {
                "id":"root",
-               "type":"array",
+               "type":"object",
                "status":"untouched",
                "values":{
-                  "0":{
-                     "id":0,
-                     "type":"number",
+                  "a":{
+                     "id": "a",
+                     "type": "number",
+                     "status": "untouched",
+                     "values": {},
+                     "representation": {"original":6,"copy":6}
+                   },
+                  "obj":{
+                     "id":"obj",
+                     "type":"object",
                      "status":"changed",
                      "values":{
-
                      },
                      "representation":{
-                        "original":3,
-                        "copy":4
-                     }
-                  },
-                  "1":{
-                     "id":1,
-                     "type":"number",
-                     "status":"changed",
-                     "values":{
-
+                        "original": "object",
+                        "copy": "array"
                      },
-                     "representation":{
-                        "original":5,
-                        "copy":6
-                     }
+                     "substitute":[5]
                   }
                },
                "representation":{
-                    "original":undefined,
-                    "copy":undefined
+                    "original":"object",
+                    "copy":"object"
                }
             };
-            var actual_result = jsondiff.generateDiff([3,5], [4,6]);
-            expect(actual_result).to.deep.equal(expectedResult);
+            var comparison = jsondiff.generateDiff(
+                {"a":6, "obj":{"d":6}},
+                {"a":6, "obj":[5]}
+      		);
+            expect(comparison).to.deep.equal(expectedResult);
             done()
         });
-    });
-    describe('foo', function() {
-        it('test generateDiff OK3', function(done) {
+        it('different objects', function(done) {
             var expectedResult = {
                 "id":"root",
                 "type":"object",
@@ -249,8 +243,8 @@ describe('jsondiff', function() {
                                             }
                                         },
                                         "representation":{
-                                            "original":undefined,
-                                            "copy":undefined
+                                            "original":"object",
+                                            "copy":"object"
                                         }
                                     },
                                     "obj_added":{
@@ -304,25 +298,25 @@ describe('jsondiff', function() {
                                             }
                                         },
                                         "representation":{
-                                            "original":undefined
+                                            "original":"object"
                                         }
                                     }
                                 },
                                 "representation":{
-                                    "original":undefined,
-                                    "copy":undefined
+                                    "original":"object",
+                                    "copy":"object"
                                 }
                             }
                         },
                         "representation":{
-                            "original":undefined,
-                            "copy":undefined
+                            "original":"object",
+                            "copy":"object"
                         }
                     }
                 },
                 "representation":{
-                    "original":undefined,
-                    "copy":undefined
+                    "original":"object",
+                    "copy":"object"
                 }
             };
             var comparison = jsondiff.generateDiff(
@@ -330,6 +324,128 @@ describe('jsondiff', function() {
     			{"obj1":{"obj2":{"obj_added":{"prop1":"value1","prop2":"value2","prop3":"value3","prop4":"value4"},"obj3":{"prop1":"value1","prop2":"value2","prop3":"value3","prop4":"value4"}}}}
       		);
             expect(comparison).to.deep.equal(expectedResult);
+            done()
+        });
+    });
+    describe('generateDiff for array', function(done) {
+        it('different array values', function(done) {
+            var expectedResult = {
+               "id":"root",
+               "type":"array",
+               "status":"untouched",
+               "values":{
+                  "0":{
+                     "id":0,
+                     "type":"number",
+                     "status":"changed",
+                     "values":{
+
+                     },
+                     "representation":{
+                        "original":3,
+                        "copy":4
+                     }
+                  },
+                  "1":{
+                     "id":1,
+                     "type":"number",
+                     "status":"changed",
+                     "values":{
+
+                     },
+                     "representation":{
+                        "original":5,
+                        "copy":6
+                     }
+                  }
+               },
+               "representation":{
+                    "original":"array",
+                    "copy":"array"
+               }
+            };
+            var actual_result = jsondiff.generateDiff([3,5], [4,6]);
+            expect(actual_result).to.deep.equal(expectedResult);
+            done()
+        });
+        it('added array element', function(done) {
+            var expectedResult = {
+               "id":"root",
+               "type":"array",
+               "status":"untouched",
+               "values":{
+                  "0":{
+                     "id":0,
+                     "type":"number",
+                     "status":"changed",
+                     "values":{
+
+                     },
+                     "representation":{
+                        "original":3,
+                        "copy":4
+                     }
+                  },
+                  "1":{
+                     "id":1,
+                     "type":"number",
+                     "status":"added",
+                     "values":{
+
+                     },
+                     "representation":{
+                        "original":6
+                     }
+                  }
+               },
+               "representation":{
+                    "original":"array",
+                    "copy":"array"
+               }
+            };
+            var actual_result = jsondiff.generateDiff([3], [4,6]);
+            console.log(JSON.stringify(actual_result));
+            expect(actual_result).to.deep.equal(expectedResult);
+            done()
+        });
+        it('added array element', function(done) {
+            var expectedResult = {
+               "id":"root",
+               "type":"array",
+               "status":"untouched",
+               "values":{
+                  "0":{
+                     "id":0,
+                     "type":"number",
+                     "status":"changed",
+                     "values":{
+
+                     },
+                     "representation":{
+                        "original":3,
+                        "copy":4
+                     }
+                  },
+                  "1":{
+                     "id":1,
+                     "type":"number",
+                     "status":"removed",
+                     "values":{
+
+                     },
+                     "representation":{
+                        "original":6
+                     }
+                  }
+               },
+               "representation":{
+                    "original":"array",
+                    "copy":"array"
+               }
+            };
+            var actual_result = jsondiff.generateDiff([3,6], [4]);
+            console.log(JSON.stringify(actual_result));
+            expect(actual_result).to.deep.equal(expectedResult);
             done()
         });
     });

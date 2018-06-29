@@ -10,7 +10,7 @@ if (typeof jsondiff == "undefined") {
 	    return this.isArray(value) ? "array" : typeof value;
 	},
 	stringify: function(value) {
-		return this.typeOf(value) === "object" || this.typeOf(value) === "array" || undefined === value?undefined:value.valueOf();
+		return this.typeOf(value) === "object" || this.typeOf(value) === "array"?this.typeOf(value):undefined === value?undefined:value.valueOf();
 	},
 	recursivelyFillDiffObj: function(obj, diff) {
 		var typeObj = this.typeOf(obj);
@@ -48,17 +48,18 @@ if (typeof jsondiff == "undefined") {
 		// What are we?
 		var typeOrigin = this.typeOf(origin);
 	    var typeCopy   = this.typeOf(copy);
-	    if (typeOrigin != typeCopy) {
+
+        diff.type = typeOrigin;
+        diff.representation = {
+            "original": this.stringify(origin),
+            "copy": this.stringify(copy)
+        }
+        if (typeOrigin != typeCopy) {
 	    	diff.status     = "changed";
-	    	diff.substitute = copy; 
+	    	diff.substitute = copy;
 	    	return;
-	    } else {
-	    	diff.type = typeOrigin;
-	    	diff.representation = {
-				"original": this.stringify(origin),
-				"copy": this.stringify(copy)
-			}
-	    }
+        }
+
 		if (typeOrigin == 'object') {
 		    // Recursively populate the diff object if the type of the source object is 'object'
 			this.process_object(origin, copy, diff)

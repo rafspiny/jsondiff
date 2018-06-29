@@ -19,7 +19,7 @@ function runEffect() {
 }
 function fillDiv(diff) {
 	// TODO check if it is an object or not.
-	// If not thron an exception
+	// If not, throw an exception
 	var div = $("#diff").get(0);
 	$("#diff").empty();
 	// Traverse the diff object
@@ -54,8 +54,8 @@ function printSingleDiff(diff, div) {
         newValue.setAttribute("class", "jsonobjvalue");
 
         var typeSpanB = document.createElement("span");
-        typeSpanB.appendChild(document.createTextNode(' ('+diff.type+') '))
-        typeSpanB.setAttribute("class", "jsontype jsondiff"+diff.type);
+        typeSpanB.appendChild(document.createTextNode(' ('+diff.representation.copy+') '))
+        typeSpanB.setAttribute("class", "jsontype jsondiff"+diff.representation.copy);
 
     	changed.appendChild(arrow);
     	changed.appendChild(newValue);
@@ -103,20 +103,17 @@ function formatJsonInTextArea(node) {
     }
 }
 $(function() {
-    $( "#format1" ).click(function( event ) {
-        event.preventDefault();
-        let node = $('textarea#primary');
-        $('#primary').removeClass("invalidJson");
-        formatJsonInTextArea(node);
-    });
-})
-$(function() {
-    $( "#format2" ).click(function( event ) {
-        event.preventDefault();
-        let node = $('textarea#secondary');
-        $('#secondary').removeClass("invalidJson");
-        formatJsonInTextArea(node);
-    });
+    const ids = ['primary', 'secondary']
+    for (id_key in ids) {
+        var id_value = ids[id_key]
+        $( "#format_"+id_value ).click(function( event ) {
+            const target_id = event.target.id.replace('format_', '')
+            event.preventDefault();
+            let node = $('textarea#'+target_id);
+            $('#'+target_id).removeClass("invalidJson");
+            formatJsonInTextArea(node);
+        });
+    }
 })
 $(function() {
     $( "#checkdiff" ).click(function( event ) {

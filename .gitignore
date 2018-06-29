@@ -2,3 +2,4 @@
 *.xpi
 web-ext-artifacts/*
 node_modules/*
+coverage/*
